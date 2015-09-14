@@ -9,3 +9,32 @@ exports.testEval = function(test) {
     test.ok(x.over(y).eval() == 2/3, '2/3');
     test.done()
 }
+
+exports.testToString = function(test) {
+    var x = new mbx.Num(2), y = new mbx.Num(3),
+        s = (obj, goal) => test.equal(obj.toString(), goal);
+    test.expect(5);
+    s(x.plus(y),  '(2+3)');
+    s(x.minus(y), '(2-3)');
+    s(x.times(y), '(2*3)');
+    s(x.over(y),  '(2/3)');
+    s(x.times(x.plus(y)),  '(2*(2+3))');
+    test.done()
+}
+
+exports.testIsExactly = function(test) {
+    // want to test whether expressions are exactly the
+    // same (as opposed to evaluating to the same thing)
+    // so I can test the parser.
+    var n0  = new mbx.Num(0),
+        n1a = new mbx.Num(1),
+        n1b = new mbx.Num(1);
+    test.expect(5);
+    test.ok(n0.isExactly(n0));
+    test.ok(n1a.isExactly(n1b));
+    test.ok(!n0.isExactly(n1a));
+    test.ok(n1a.plus(n1b).isExactly(n1b.plus(n1a)));
+    test.ok(!n1a.plus(n0).isExactly(n0.plus(n1a)),
+               "1+0 should not be the same expression as 0+1");
+    test.done()
+}

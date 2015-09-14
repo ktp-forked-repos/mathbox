@@ -1,5 +1,6 @@
 "use strict";
 
+// abstract parent class
 class Expr {
   plus(y) {
     return new BinOp(this, '+', y);
@@ -13,18 +14,31 @@ class Expr {
   over(y) {
     return new BinOp(this, '/', y);
   }
+  isExactly(expr) {
+    return this.toString() == expr.toString();
+  }
+  toString() {
+    throw new Exception("Instantiate a subclass of Expr instead.") ;
+  }
 }
 
 
 class Num extends Expr {
-   constructor(value) {
-     super();
-     this.value = value;
-   }
-   eval() {
-     return this.value;
-   }
+
+  constructor(value) {
+    super();
+    this.value = value;
+  }
+
+  eval() {
+    return this.value;
+  }
+
+  toString() {
+    return this.value.toString();
+  }
 }
+
 
 
 class BinOp extends Expr {
@@ -42,6 +56,11 @@ class BinOp extends Expr {
       case '*': return x.eval() * y.eval();
       case '/': return x.eval() / y.eval();
     }
+  }
+
+  toString() {
+    // fully parenthesized so I don't have to mess with precedence here.
+    return `(${this.x.toString()}${this.op}${this.y.toString()})`;
   }
 }
 
