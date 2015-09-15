@@ -1,4 +1,4 @@
-var mbx=require('../mathbox-expr');
+var mbx = require('../mathbox-expr');
 
 exports.testEval = function(test) {
     var x = new mbx.Num(2), y = new mbx.Num(3);
