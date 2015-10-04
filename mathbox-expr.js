@@ -14,6 +14,9 @@ class Expr {
   over(y) {
     return new BinOp(this, '/', y);
   }
+  mod(y) {
+    return new BinOp(this, '%', y);
+  }
   isExactly(expr) {
     return this.toString() == expr.toString();
   }
@@ -55,6 +58,7 @@ class BinOp extends Expr {
       case '-': return x.eval() - y.eval();
       case '*': return x.eval() * y.eval();
       case '/': return x.eval() / y.eval();
+      case '%': return x.eval() % y.eval();
     }
   }
 

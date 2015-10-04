@@ -2,22 +2,22 @@ var mbx = require('../mathbox-expr');
 
 exports.testEval = function(test) {
     var x = new mbx.Num(2), y = new mbx.Num(3);
-    test.expect(4);
     test.ok(x.plus(y).eval()  ==  5, '2+3');
     test.ok(x.minus(y).eval() == -1, '2-3');
     test.ok(x.times(y).eval() ==  6, '2*3');
     test.ok(x.over(y).eval() == 2/3, '2/3');
+    test.ok(x.mod(y).eval()  == 2%3, '2%3');
     test.done()
 }
 
 exports.testToString = function(test) {
     var x = new mbx.Num(2), y = new mbx.Num(3),
         s = (obj, goal) => test.equal(obj.toString(), goal);
-    test.expect(5);
     s(x.plus(y),  '(2+3)');
     s(x.minus(y), '(2-3)');
     s(x.times(y), '(2*3)');
     s(x.over(y),  '(2/3)');
+    s(x.mod(y),   '(2%3)');
     s(x.times(x.plus(y)),  '(2*(2+3))');
     test.done()
 }
@@ -29,7 +29,7 @@ exports.testIsExactly = function(test) {
     var n0  = new mbx.Num(0),
         n1a = new mbx.Num(1),
         n1b = new mbx.Num(1);
-    test.expect(5);
+
     test.ok(n0.isExactly(n0));
     test.ok(n1a.isExactly(n1b));
     test.ok(!n0.isExactly(n1a));
