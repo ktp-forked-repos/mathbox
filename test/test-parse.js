@@ -1,7 +1,17 @@
-var mbp = require("../mathbox-parse");
+var mbp = require("../mathbox-parse"),
+    mbx = require("../mathbox-expr");
 
 exports.testLexer = function (test) {
   test.deepEqual(mbp.tokenize("(1/23*(45-6))"),
              ['(','1','/','23','*','(','45','-','6',')',')']);
+  test.done();
+}
+
+exports.testLexer = function (test) {
+  var N = (n) => new mbx.Num(n);
+  test.deepEqual(mbp.parse("1"), N(1) );
+  test.deepEqual(mbp.parse("2+3"), N(2).plus(N(3)) );
+  test.deepEqual(mbp.parse("2*3+4"), ( N(2).times(N(3)) ).plus(N(4)) );
+  test.deepEqual(mbp.parse("2+3*4"), N(2).plus( N(3).times(N(4))) );
   test.done();
 }
