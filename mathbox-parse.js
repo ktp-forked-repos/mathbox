@@ -75,11 +75,14 @@ class Parser {
 
 }
 
-function parse(str) {
+// --- public interface ---
+
+exports.parse = function (str) {
   return new Parser(str).expr();
 }
 
-module.exports = {
-  tokenize: tokenize,
-  parse: parse
-};
+exports.lex = function (str) {
+  var res = []
+  for (var tok of tokenize(str)) res.push(tok);
+  return res;
+}
