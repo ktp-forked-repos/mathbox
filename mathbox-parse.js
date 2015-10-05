@@ -74,9 +74,9 @@ class Parser {
           throw new Error(`expected ')', but found '${this.token}' instead`);
         }
         break;
-
-      // !! was considering adding syntax for variables here...
-
+      case '-':
+        return this.factor().negate();
+        break;
       default:
         throw new Error(`unexpected token: '${tok}'`);
       }

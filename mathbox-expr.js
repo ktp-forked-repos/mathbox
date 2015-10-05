@@ -49,6 +49,10 @@ class Expr {
     throw new Exception("Instantiate a subclass of Expr instead.") ;
   }
 
+  negate() {
+    throw new Exception("Instantiate a subclass of Expr instead.") ;
+  }
+
 }
 
 
@@ -74,6 +78,11 @@ class Num extends Expr {
   leafCount() {
     return 1;
   }
+
+  negate() {
+    return new Num(-this.value);
+  }
+
 }
 
 
@@ -85,9 +94,10 @@ class Num extends Expr {
  */
 class BinOp extends Expr {
 
-  constructor(x,op,y) {
+  constructor(x,op,y, negated) {
     super();
     this.x=x; this.y=y; this.op=op;
+    this.negated = negated;
   }
 
   eval() {
@@ -103,11 +113,16 @@ class BinOp extends Expr {
 
   toString() {
     // fully parenthesized so I don't have to mess with precedence here.
-    return `(${this.x.toString()}${this.op}${this.y.toString()})`;
+    return (this.negated ? '-' : '')
+         + `(${this.x.toString()}${this.op}${this.y.toString()})`;
   }
 
   leafCount() {
     return this.x.leafCount() + this.y.leafCount();
+  }
+
+  negate() {
+    return new BinOp(this.x, this.op, this.y, !this.negated);
   }
 
 }

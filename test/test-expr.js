@@ -38,3 +38,10 @@ exports.testIsExactly = function(test) {
                "1+0 should not be the same expression as 0+1");
     test.done()
 }
+
+var N = (n) => new mbx.Num(n);
+exports.testNegate = function(test) {
+  test.equals(N(1).negate().toString(), '-1');
+  test.equals((N(2).plus(N(3))).negate().toString(), '-(2+3)');
+  test.done();
+}
