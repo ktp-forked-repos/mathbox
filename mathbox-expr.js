@@ -45,6 +45,10 @@ class Expr {
     throw new Exception("Instantiate a subclass of Expr instead.") ;
   }
 
+  leafCount() {
+    throw new Exception("Instantiate a subclass of Expr instead.") ;
+  }
+
 }
 
 
@@ -65,6 +69,10 @@ class Num extends Expr {
 
   toString() {
     return this.value.toString();
+  }
+
+  leafCount() {
+    return 1;
   }
 }
 
@@ -97,6 +105,11 @@ class BinOp extends Expr {
     // fully parenthesized so I don't have to mess with precedence here.
     return `(${this.x.toString()}${this.op}${this.y.toString()})`;
   }
+
+  leafCount() {
+    return this.x.leafCount() + this.y.leafCount();
+  }
+
 }
 
 
