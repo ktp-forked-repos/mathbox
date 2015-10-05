@@ -70,7 +70,7 @@ class Parser {
       switch(tok) {
       case '(':
         res = this.expr()
-        if (this.next()!=')') {
+        if (this.token!=')') {
           throw new Error(`expected ')', but found '${this.token}' instead`);
         }
         break;
