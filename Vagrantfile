@@ -75,5 +75,9 @@ Vagrant.configure(2) do |config|
     sudo npm install -g nodeunit
     cd /vagrant; nodeunit
 
+    # run the demo
+    ./demo
+
+    echo "all done!"
   SHELL
 end
