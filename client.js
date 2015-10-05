@@ -4,7 +4,8 @@
  * the server for evaluation.
  */
 var net = require('net'),
-    rln = require('readline');
+    rln = require('readline'),
+    mbr = require('./mathbox-rand');
 
 function log(msg) {
   console.log(msg);
@@ -36,7 +37,7 @@ var sock = net.connect(1313, ()=> {
   });
 
   repeat(100, 250, (n)=> {
-    var expr = "2*3+4";
+    var expr = mbr.randEx(Math.floor(1+Math.random()*10));
     log(`${100-n}/100: sending ${expr}`);
     sock.write(`${expr}\r\n`);
     if (n == 0) done = true;
