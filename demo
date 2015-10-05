@@ -1,0 +1,25 @@
+#!/bin/bash
+echo 'erasing old log files'
+rm -rf server.log client0.log client1.log
+
+echo 'launching server'
+nodejs server.js > server.log &
+server=$!
+sleep 1
+
+echo 'launching clients'
+nodejs client.js | tee client0.log &
+c0=$!
+nodejs client.js | tee client1.log &
+c1=$!
+
+wait $c0
+wait $c1
+
+echo
+echo 'all done. killing server.'
+kill $server
+
+echo
+echo 'log files:'
+ls -l *.log
