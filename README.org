@@ -1,0 +1,46 @@
+* Mathbox
+
+Mathbox is a small arithmetic server written for [[https://nodejs.org/en/][Node.js]] 4.1.1.
+
+It listens on port 1313 and expects arithmetic expressions, separated by CR/LF characters.
+
+In response, it returns a fully parenthesized version of the expression, followed by an equal sign and the resulting value.
+
+Example input:
+
+: 2 + 2
+
+Corresponding output:
+
+: (2+2)=4
+
+* Demo Instructions
+
+The demo launches a server and then creates two clients that each send 100 randomly-generated expressions.
+It waits for the clients to finish, and then terminates the server.
+
+Both the clients and server generate logfiles showing what happened.
+
+If you're running node 4.1.1 and feeling lucky, you can just try running the demo directly:
+
+: ./demo
+
+If that doesn't work, you can install [[http://vagrantup.com/][vagrant]] and run the demo in a virtual machine.
+Just `cd` into this directory and run:
+
+: vagrant up
+
+This will provision an ubuntu box with node, then run the unit tests and demo script.
+Once it's done, you can inspect the logs in the current directory.
+
+You can then log into the vagrant box and experiment with the code:
+
+: vagrant ssh
+: cd /vagrant   # once you've connected
+
+Note: the server runs on port 1313 and this is forwarded to your host machine.
+
+Once you're done and have exited the shell, you can shut down and destroy the vagrant box with:
+
+: vagrant destroy
+
