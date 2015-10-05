@@ -1,4 +1,11 @@
 "use strict";
+/**
+ * This file contains a lexer and parser for
+ * mathbox expressions. The main function is:
+ *
+ * parse(str) → AST
+ *
+ */
 var mbx = require('./mathbox-expr');
 
 // !! this is a pretty crude lexer that will simply
@@ -14,7 +21,10 @@ function* tokenize (str) {
 }
 
 /**
- * A simple recursive descent parser for arithmetic expressions.
+ * `Parser` is a recursive descent parser for expressions.
+ * Other than `next()` (which looks ahead to the next token),
+ * each method implements a single syntax rule in an EBNF
+ * grammar.
  */
 class Parser {
 
@@ -64,6 +74,9 @@ class Parser {
           throw new Error(`expected ')', but found '${this.token}' instead`);
         }
         break;
+
+      // !! was considering adding syntax for variables here...
+
       default:
         throw new Error(`unexpected token: '${tok}'`);
       }
@@ -77,12 +90,14 @@ class Parser {
 
 // --- public interface ---
 
-exports.parse = function (str) {
-  return new Parser(str).expr();
-}
+module.exports = {
+  parse: function (str) {
+    return new Parser(str).expr();
+  },
 
-exports.lex = function (str) {
-  var res = []
-  for (var tok of tokenize(str)) res.push(tok);
-  return res;
+  lex: function (str) {
+    var res = []
+    for (var tok of tokenize(str)) res.push(tok);
+    return res;
+  }
 }
