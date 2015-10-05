@@ -20,9 +20,8 @@ Vagrant.configure(2) do |config|
   # config.vm.box_check_update = false
 
   # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # within the machine from a port on the host machine.
+  config.vm.network "forwarded_port", guest: 1313, host: 1313
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -64,8 +63,17 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   sudo apt-get update
-  #   sudo apt-get install -y apache2
-  # SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+
+    # install 4.4.1 rather than stock nodejs
+    sudo apt-get install -y curl
+    curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
+    sudo apt-get install -y nodejs
+
+    # nodeunit setup
+    sudo npm install -g nodeunit
+    cd /vagrant; nodeunit
+
+  SHELL
 end
